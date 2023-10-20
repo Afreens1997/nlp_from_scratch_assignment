@@ -40,7 +40,7 @@ def convert_dict_to_annotation_input(pdf_dict):
         text = text.decode("utf-8")
         # print(text)
         doc = nlp(text)
-        tokens_text = [x.text for x in doc if x.text.isalnum() or x.is_punct or x.is_currency or x.text.replace(".","").isdecimal()]
+        tokens_text = [x.text for x in doc if x.text.isprintable()]
         tokens_text = " ".join(tokens_text)
         return tokens_text
 
