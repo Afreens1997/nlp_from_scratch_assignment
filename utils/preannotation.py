@@ -477,8 +477,6 @@ def generate_pre_annotations(doc):
 
     return remove_overlapping_spans(predictions)
 
-# if __name__ == "__main__":
-#     a=5
 
 
 
