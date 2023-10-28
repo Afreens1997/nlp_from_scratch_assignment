@@ -6,15 +6,11 @@ import uuid
 import spacy
 from spacy.matcher import Matcher
 
-
-sys.path.append('/Users/afreenshaikh/Documents/CMU_projects/scipdf_parser')
-sys.path.append('/Users/afreenshaikh/Documents/CMU_projects/nlp_from_scratch_assignment')
-
 from utils.preannotation import remove_overlapping_spans
 from utils.file_utils import read_json, write_json
 
 
-all_data = read_json("/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/dump/afreen/anlp_afreen_dataset_v1.json")
+all_data = read_json("/path/to/annotated/data.json")
 pprint(all_data[0])
 
 file_data_map = defaultdict(list)
@@ -103,6 +99,6 @@ all_data_new = []
 for k,v in file_data_map.items():
     all_data_new.extend(v)
 
-write_json(all_data_new, "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/dump/afreen/anlp_afreen_dataset_completed.json")
+write_json(all_data_new, "/path/to/store/the/corrected/annotation.json")
     
 
