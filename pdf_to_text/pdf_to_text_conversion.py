@@ -1,22 +1,22 @@
 import glob
+import os
 from pprint import pprint
 import sys
 from unicodedata import normalize
+import argparse
 
-sys.path.append('/Users/afreenshaikh/Documents/CMU_projects/scipdf_parser')
-sys.path.append('/Users/afreenshaikh/Documents/CMU_projects/nlp_from_scratch_assignment')
+sys.path.append('/path/to/scipdf_parser/code/checkout')
+sys.path.append('/path/to/project/')
 
 import spacy
 
 from utils.preannotation import generate_pre_annotations
 
 
-from utils.file_utils import write_json
+from utils.file_utils import read_json, write_json
 
 
 import scipdf
-# attention_dict = scipdf.parse_pdf_to_dict('/Users/afreenshaikh/Documents/CMU_projects/scipdf_parser/example_data/attention_paper.pdf', fulltext=True, as_list=True)
-# pprint(attention_dict)
 
 PARA_LENGTH_LIMIT = 10
 nlp = spacy.load("en_core_web_sm")
@@ -102,20 +102,30 @@ def add_annotations_to_data(annotated_data):
 
 
 if __name__ == "__main__":
-    pdfs_base_path = "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/acl-2023-short"
-    dict_output_path = "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/pdf_dict"
-    annotation_input = "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/annotation_input1"
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('pdf_base_path', type=str,
+                        help='Path of folder containing pdfs')
+    parser.add_argument('dict_output_path', type=str,
+                        help='path to save scipdf parsed pdf files')
+    parser.add_argument('annotation_input_path', type=str,
+                        help='path to store annotation input jsons')
+    
+    args = parser.parse_args()
+
+
+    
+    pdfs_base_path = args.pdf_base_path
+    dict_output_path = args.dict_output_path
+    annotation_input = args.annotation_input_path
+
+    
     all_pdf_files = glob.glob(pdfs_base_path+"/*")
-    sorted_pdf_files = sorted(all_pdf_files, key=lambda x:int(x.split("/")[-1][:-4][3:]))
-    # print(sorted_pdf_files)
-    for pdf_file_path in sorted_pdf_files[2:30]:
+    for pdf_file_path in all_pdf_files:
+        
         file_name = pdf_file_path.split("/")[-1][:-4]
         print(file_name, f"/{file_name}.json")
         pdf_dict = write_pdf_to_dict_scipdf(pdf_file_path, dict_output_path + f"/{file_name}.json")
+        pdf_dict = read_json(dict_output_path + f"/{file_name}.json")
         annotation_input_data = convert_dict_to_annotation_input(pdf_dict)
         write_json(annotation_input_data, annotation_input + f"/{file_name}.json")
-
-        
-
-
