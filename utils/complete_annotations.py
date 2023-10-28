@@ -103,7 +103,6 @@ all_data_new = []
 for k,v in file_data_map.items():
     all_data_new.extend(v)
 
-# write_json(all_data_new, "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/dump/afreen/anlp_afreen_dataset_completed.json")
-print(list(per_file_annotations.keys()))
+write_json(all_data_new, "/Users/afreenshaikh/Library/CloudStorage/GoogleDrive-afreens@andrew.cmu.edu/.shortcut-targets-by-id/1tZMZ1hVZ12FuHdPiu88Shf3zG1ZgrK47/A2/dump/afreen/anlp_afreen_dataset_completed.json")
     
 
